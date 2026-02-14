@@ -58,6 +58,24 @@ enum NotificationType {
   VERIFICATION
   BOOKING
   ROUTE
+  REPORT
+}
+
+enum ReportType {
+  DANGEROUS_DRIVING
+  INAPPROPRIATE_COMMENTS
+  USING_PHONE_WHILE_DRIVING
+  HARASSMENT
+  LATE
+  OVERCHARGING
+  DECLINE_PASSENGER
+  TAKING_WRONG_ROUTE_INTENTIONALLY
+}
+
+enum ReportStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 model User {
@@ -88,6 +106,8 @@ model User {
   notification          Notification[]
   createdRoutes         Route[]             @relation("DriverRoutes")
   bookings              Booking[]           @relation("PassengerBookings")
+  reportsMade           Report[]            @relation("PassengerReports")
+  reportsReceived       Report[]            @relation("DriverReports")
 
   @@index([role])
   @@index([isActive])
@@ -210,4 +230,23 @@ model Booking {
   pickupLocation  Json          @db.Json
   dropoffLocation Json          @db.Json
   createdAt       DateTime      @default(now())
+}
+
+model Report {
+  id            String         @id @default(cuid())
+  passengerId   String
+  passenger     User           @relation("PassengerReports", fields: [passengerId], references: [id], onDelete: Cascade)
+  driverId      String
+  driver        User           @relation("DriverReports", fields: [driverId], references: [id], onDelete: Cascade)
+  types         ReportType[]
+  description   String?
+  photos        String[]
+  status        ReportStatus   @default(PENDING)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([passengerId])
+  @@index([driverId])
+  @@index([status])
+  @@index([createdAt])
 }
