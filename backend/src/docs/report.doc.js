@@ -45,6 +45,69 @@
  *         updatedAt:
  *           type: string
  *           format: date-time
+ *     ReportWithUsers:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *         passengerId:
+ *           type: string
+ *         driverId:
+ *           type: string
+ *         types:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/ReportType'
+ *         description:
+ *           type: string
+ *           nullable: true
+ *         photos:
+ *           type: array
+ *           items:
+ *             type: string
+ *             format: uri
+ *         status:
+ *           $ref: '#/components/schemas/ReportStatus'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *         passenger:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             firstName:
+ *               type: string
+ *             lastName:
+ *               type: string
+ *             username:
+ *               type: string
+ *             email:
+ *               type: string
+ *             phoneNumber:
+ *               type: string
+ *             profilePicture:
+ *               type: string
+ *         driver:
+ *           type: object
+ *           properties:
+ *             id:
+ *               type: string
+ *             firstName:
+ *               type: string
+ *             lastName:
+ *               type: string
+ *             username:
+ *               type: string
+ *             email:
+ *               type: string
+ *             phoneNumber:
+ *               type: string
+ *             profilePicture:
+ *               type: string
  */
 
 /**
@@ -237,7 +300,7 @@
  *                 data:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/Report'
+ *                     $ref: '#/components/schemas/ReportWithUsers'
  *                 pagination:
  *                   type: object
  *                   properties:
@@ -282,7 +345,7 @@
  *                 message:
  *                   type: string
  *                 data:
- *                   $ref: '#/components/schemas/Report'
+ *                   $ref: '#/components/schemas/ReportWithUsers'
  *       401:
  *         description: Not authorized
  *       403:

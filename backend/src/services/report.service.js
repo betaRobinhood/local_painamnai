@@ -161,8 +161,8 @@ const listReportsAdmin = async (opts = {}) => {
       take,
       select: {
         ...baseSelect,
-        passenger: { select: { id: true, firstName: true, lastName: true, email: true, username: true } },
-        driver: { select: { id: true, firstName: true, lastName: true, email: true, username: true } },
+        passenger: { select: { id: true, firstName: true, lastName: true, email: true, username: true, phoneNumber: true, profilePicture: true } },
+        driver: { select: { id: true, firstName: true, lastName: true, email: true, username: true, phoneNumber: true, profilePicture: true } },
       },
     }),
   ]);
@@ -181,8 +181,8 @@ const adminGetReportById = async (id) => {
     where: { id },
     select: {
       ...baseSelect,
-      passenger: { select: { id: true, firstName: true, lastName: true, email: true, username: true, profilePicture: true } },
-      driver: { select: { id: true, firstName: true, lastName: true, email: true, username: true, profilePicture: true } },
+      passenger: { select: { id: true, firstName: true, lastName: true, email: true, username: true, phoneNumber: true, profilePicture: true } },
+      driver: { select: { id: true, firstName: true, lastName: true, email: true, username: true, phoneNumber: true, profilePicture: true } },
     },
   });
   if (!report) throw new ApiError(404, 'Report not found');
@@ -202,8 +202,8 @@ const adminUpdateReportStatus = async (id, status) => {
       data: { status },
       select: {
         ...baseSelect,
-        passenger: { select: { id: true, firstName: true, lastName: true, username: true } },
-        driver: { select: { id: true, firstName: true, lastName: true, username: true } },
+        passenger: { select: { id: true, firstName: true, lastName: true, username: true, email: true, phoneNumber: true, profilePicture: true } },
+        driver: { select: { id: true, firstName: true, lastName: true, username: true, email: true, phoneNumber: true, profilePicture: true } },
       },
     });
 
