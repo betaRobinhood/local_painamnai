@@ -19,6 +19,7 @@ router.use('/driver-verifications', driverVerifRoutes);
 router.use('/bookings', bookingRoutes);
 router.use('/notifications', notificationRoutes);
 router.use('/api/maps', mapRoutes);
+
 router.use('/reports', reportRoutes);
 
 module.exports = router;
