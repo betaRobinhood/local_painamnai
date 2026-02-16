@@ -123,9 +123,12 @@
                         {{ report.description || '-' }}
                       </InfoBox>
 
-                      <InfoBox label="วันเวลา">
+                      <InfoBox label="วันเวลาที่แจ้ง">
                         {{formatDate(report.createdAt)}}
                       </InfoBox>
+                      <!-- <InfoBox label="วันเวลาที่อัปเดต">
+                        {{formatDate(report.updatedAt)}}
+                      </InfoBox> -->
 
                       <InfoBox label="รูปภาพ">
                         <div v-if="report.photos?.length" class="mt-2 grid grid-cols-2 md:grid-cols-3 gap-4">
@@ -133,8 +136,10 @@
                             v-for="(photo, index) in report.photos"
                             :key="index"
                             :src="photo"
-                            class="h-40 w-full rounded-lg object-cover border"
+                            class="h-40 w-full rounded-lg object-cover border cursor-pointer hover:opacity-80"
+                            @click="selectedPhoto = photo"
                           />
+
                         </div>
 
                         <p v-else class="text-gray-400 mt-2">ไม่มีรูปแนบ</p>
@@ -146,6 +151,17 @@
             </div>
       </div>
     </main>
+    <div
+      v-if="selectedPhoto"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+      @click.self="selectedPhoto = null"
+    >
+      <img
+        :src="selectedPhoto"
+        class="max-h-[90vh] max-w-[90vw] rounded-lg shadow-lg"
+      />
+    </div>
+
   </div>
 </template>
 
@@ -241,7 +257,7 @@ function formatDate(iso?: string | null) {
   return dayjs
     .utc(iso)
     .tz('Asia/Bangkok')
-  .format('D MMM YYYY HH:mm')
+  .format('D MMM YYYY / HH:mm')
 }
 
 function mapReportType(type: string) {
@@ -317,5 +333,8 @@ const InfoBox = defineComponent({
             ])
     }
 })
+
+const selectedPhoto = ref<string | null>(null)
+
 
 </script>
